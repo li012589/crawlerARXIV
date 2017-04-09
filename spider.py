@@ -22,11 +22,12 @@ class Spider:
     todo = set()
     done = set()
     domain = ''
-    def __init__(self,baseUrl,temPath):
+    def __init__(self,baseUrl,temPath,job):
         Spider.baseUrl = baseUrl
         Spider.todoPath = temPath + '/todolist.txt'
         Spider.donePath = temPath + '/donelist.txt'
         Spider.domain = baseUrl
+        Spider.job = job
         fo.createDir(temPath)
         fo.createFile(Spider.todoPath)
         fo.createFile(Spider.donePath)
@@ -61,5 +62,6 @@ class Spider:
                     Spider.todo.add(iterm)
             Spider.todo.remove(url)
             Spider.done.add(url)
+            Spider.job(contents)
             fo.list2file(Spider.todoPath,list(Spider.todo))
             fo.list2file(Spider.donePath,list(Spider.done))
