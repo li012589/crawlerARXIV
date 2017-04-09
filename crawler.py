@@ -28,17 +28,19 @@ class Spider:
     baseUrl = ''
     todo = set()
     done = set()
+    domain = ''
     def __init__(self,baseUrl,temPath):
         Spider.baseUrl = baseUrl
         Spider.todoPath = temPath + '/todolist.txt'
         Spider.donePath = temPath + '/donelist.txt'
+        Spider.domain = baseUrl
         fo.createDir(temPath)
         fo.createFile(Spider.todoPath)
         fo.createFile(Spider.donePath)
         Spider.todo = set(fo.file2list(Spider.todoPath))
         Spider.todo.add(Spider.baseUrl)
         Spider.done = set(fo.file2list(Spider.donePath))
-        print('Starting crawling')
+        #print('Starting crawling')
         self.crawl('1st',Spider.baseUrl)
 
     @staticmethod
@@ -62,7 +64,7 @@ class Spider:
         if url not in Spider.done:
             newUrl,contents=Spider.gatherURL(url)
             for iterm in newUrl:
-                if (iterm not in Spider.done) and (iterm not in Spider.todo):
+                if (iterm not in Spider.done) and (iterm not in Spider.todo) and (Spider.domain in iterm):
                     Spider.todo.add(iterm)
             Spider.todo.remove(url)
             Spider.done.add(url)
