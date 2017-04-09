@@ -16,7 +16,7 @@ def file2list(name):
     res=[]
     with open(name,'r') as f:
         for line in f:
-            res.append(line,replace('\n',''))
+            res.append(line.replace('\n',''))
     return res
 
 def list2file(name,lis):

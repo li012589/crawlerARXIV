@@ -23,30 +23,39 @@ class linksFinder(HTMLParser):
                     self.links.add(url)
 
 class Spider:
+    todoPath = ''
+    donePath = ''
     baseUrl = ''
     todo = set()
     done = set()
     def __init__(self,baseUrl,temPath):
         Spider.baseUrl = baseUrl
-        todoPath = temPath + '/todolist.txt'
-        donePath = temPath + '/donelist.txt'
+        Spider.todoPath = temPath + '/todolist.txt'
+        Spider.donePath = temPath + '/donelist.txt'
         fo.createDir(temPath)
-        fo.createFile(todoPath)
-        fo.createFile(donePath)
-        Sipder.todo = set(fo.file2list(todoPath))
-        Spider.done = set(fo.file2list(donePath))
+        fo.createFile(Spider.todoPath)
+        fo.createFile(Spider.donePath)
+        Spider.todo = set(fo.file2list(Spider.todoPath))
+        Spider.todo.add(Spider.baseUrl)
+        Spider.done = set(fo.file2list(Spider.donePath))
+        print('Starting crawling')
         self.crawl('1st',Spider.baseUrl)
 
     @staticmethod
     def gatherURL(url):
         html=''
-        response = urlopen(url)
-        if 'text/html' in response.getheader('Content-Type'):
-            html=response.read()
-            html=html.decode('utf-8')
-        res = linksFinder(Spider.baseUrl)
-        res.feed(html)
-        return res.links, html
+        try:
+            response = urlopen(url)
+            if 'text/html' in response.getheader('Content-Type'):
+                html=response.read()
+                html=html.decode('utf-8')
+            res = linksFinder(Spider.baseUrl)
+            res.feed(html)
+            return res.links, html
+        except Exception as e:
+            print(str(e))
+            return set(),html
+
 
     @staticmethod
     def crawl(name,url):
@@ -55,11 +64,10 @@ class Spider:
             for iterm in newUrl:
                 if (iterm not in Spider.done) and (iterm not in Spider.todo):
                     Spider.todo.add(iterm)
-            print(Spider.todo)
             Spider.todo.remove(url)
             Spider.done.add(url)
-            list2file(todoPath,list(Spider.todo))
-            list2file(donePath,list(Spider.done))
+            fo.list2file(Spider.todoPath,list(Spider.todo))
+            fo.list2file(Spider.donePath,list(Spider.done))
 
 
 if __name__ == "__main__":
