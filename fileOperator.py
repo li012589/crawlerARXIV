@@ -1,12 +1,12 @@
 import os
 
 def createDir(name):
-    if os.path.exist(name):
-        print "createDir error at name:"+name
+    if os.path.exists(name):
+        print("createDir error at name:"+name)
     else:
         os.makedirs(name)
 def createFile(name):
-    if not os.patj.exist(name):
+    if not os.path.exists(name):
         with open(name, 'w') as f:
             f.write('')
     else:

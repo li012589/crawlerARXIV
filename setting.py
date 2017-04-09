@@ -17,4 +17,4 @@ class Settings:
                 if re.search(pattern,line):
                     continue
                 line=line.split(' ')
-                self._settings[line[0]]=line[2]
+                self._settings[line[0]]=line[2].replace('\'','')
