@@ -1,0 +1,10 @@
+// The URL to crawl
+URL = 'https://arxiv.org'
+// keyword for result to included, empty for include all
+keyword = ''
+// Output path
+outputPath = './OUTPUT'
+// Result file path
+resultPath = './OUTPUT/result.md'
+// Download pdf or not?
+isdownload = 0
