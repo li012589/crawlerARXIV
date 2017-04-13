@@ -34,7 +34,7 @@ class Spider:
         Spider.todo = set(fo.file2list(Spider.todoPath))
         Spider.todo.add(Spider.baseUrl)
         Spider.done = set(fo.file2list(Spider.donePath))
-        #print('Starting crawling')
+        print('Initizing Spider')
         self.crawl('1st',Spider.baseUrl)
 
     @staticmethod
@@ -55,6 +55,7 @@ class Spider:
 
     @staticmethod
     def crawl(name,url):
+        print("Spider "+name+"is now crawling "+url)
         if url not in Spider.done:
             newUrl,contents=Spider.gatherURL(url)
             for iterm in newUrl:
