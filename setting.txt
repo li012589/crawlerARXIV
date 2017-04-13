@@ -12,6 +12,6 @@ isdownload = 0
 // Max number of threadings
 ThreadingMaxNum = 1
 // Sleep time between every crawl
-SleepTime = 100
+SleepTime = 0.01
 // If clear Tem folder before crawling
 isClear = 1

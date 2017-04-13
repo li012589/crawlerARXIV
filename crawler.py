@@ -1,6 +1,7 @@
 import threading
 import re
 from shutil import rmtree
+from time import sleep
 import fileOperator as fo
 from setting import Settings
 from spider import Spider
@@ -11,10 +12,11 @@ from queue import Queue
 queue = Queue()
 settingPath = './setting.txt'
 
-def work():
+def work(time):
     while True:
         url = queue.get()
         spider.crawl(threading.current_thread().name, url)
+        sleep(time)
         queue.task_done()
 
 def updateTask(pathtoFile):
@@ -24,9 +26,9 @@ def updateTask(pathtoFile):
             queue.put(task)
         queue.join()
 
-def threadingCrawl(maxThread):
+def threadingCrawl(maxThread,sleepTime):
     for works in range(maxThread):
-        t = threading.Thread(target=work)
+        t = threading.Thread(target=work,args=(sleepTime,))
         t.daemon = True
         t.start()
 
@@ -37,7 +39,7 @@ if __name__ == "__main__":
     queuePath = settings.getValue('outputPath') + '/todolist.txt'
     maxThread = int(settings.getValue('ThreadingMaxNum'))
     isClear = int(settings.getValue('isClear'))
-    sleepTime = int(settings.getValue('SleepTime'))
+    sleepTime = float(settings.getValue('SleepTime'))
     if isClear == 1:
         try:
             rmtree(temPath)
@@ -47,5 +49,5 @@ if __name__ == "__main__":
             print('Temporary folder removed! (Can\'t continue after break, change at setting.txt)')
 
     spider = Spider(baseUrl,temPath,job)
-    threadingCrawl(maxThread)
+    threadingCrawl(maxThread,sleepTime)
     updateTask(queuePath)
