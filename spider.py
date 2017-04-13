@@ -24,6 +24,7 @@ class Spider:
     done = set()
     domain = ''
     passFeature = ''
+    jobDone = 0
     def __init__(self,baseUrl,temPath,passFeature,job):
         Spider.baseUrl = baseUrl
         Spider.todoPath = temPath + '/todolist.txt'
@@ -31,6 +32,7 @@ class Spider:
         Spider.domain = baseUrl
         Spider.passFeature = passFeature
         Spider.job = job
+        Spider.jobDone = 0
         fo.createDir(temPath)
         fo.createFile(Spider.todoPath)
         fo.createFile(Spider.donePath)
@@ -59,16 +61,17 @@ class Spider:
     @staticmethod
     def crawl(name,url):
         print("Spider "+name+" is now crawling "+url)
-        if not re.search(Spider.passFeature,url):
-            if url not in Spider.done:
-                newUrl,contents=Spider.gatherURL(url)
-                for iterm in newUrl:
-                    if (iterm not in Spider.done) and (iterm not in Spider.todo) and (Spider.domain in iterm):
-                        Spider.todo.add(iterm)
-                Spider.todo.remove(url)
-                Spider.done.add(url)
+        if url not in Spider.done:
+            newUrl,contents=Spider.gatherURL(url)
+            for iterm in newUrl:
+                if (iterm not in Spider.done) and (iterm not in Spider.todo) and (Spider.domain in iterm):
+                    Spider.todo.add(iterm)
+            Spider.todo.remove(url)
+            Spider.done.add(url)
+            if not re.search(Spider.passFeature,url):
                 Spider.job(contents)
-                fo.list2file(Spider.todoPath,list(Spider.todo))
-                fo.list2file(Spider.donePath,list(Spider.done))
-        else:
-            print("URL: "+url+" is passed")
+                Spider.jobDone += 1
+            else:
+                print("URL: "+url+" is passed")
+            fo.list2file(Spider.todoPath,list(Spider.todo))
+            fo.list2file(Spider.donePath,list(Spider.done))

@@ -4,7 +4,9 @@ URL = 'http://jandan.net/ooxx'
 // keyword for result to included, empty for include all
 keyword = ''
 // Output path
-outputPath = './OUTPUT'
+outputPath = './output'
+// Temporary file path
+temPath = './TEM'
 // Result file path
 resultPath = './OUTPUT/result.md'
 // Download pdf or not?
@@ -15,5 +17,7 @@ ThreadingMaxNum = 1
 SleepTime = 0.01
 // If the url match what, then pass the page, in python reg expression
 WhatToPass = '(#comment)'
+// Maxium pages
+maxPage = 1
 // If clear Tem folder before crawling
 isClear = 1
