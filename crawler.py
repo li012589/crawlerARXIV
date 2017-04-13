@@ -1,5 +1,6 @@
 import threading
 import re
+from shutil import rmtree
 import fileOperator as fo
 from setting import Settings
 from spider import Spider
@@ -7,9 +8,8 @@ from job import job
 from queue import Queue
 
 # Const Vars
-settingPath = './setting.txt'
-MaxThreading = 1
 queue = Queue()
+settingPath = './setting.txt'
 
 def work():
     while True:
@@ -24,8 +24,8 @@ def updateTask(pathtoFile):
             queue.put(task)
         queue.join()
 
-def threadingCrawl():
-    for works in range(MaxThreading):
+def threadingCrawl(maxThread):
+    for works in range(maxThread):
         t = threading.Thread(target=work)
         t.daemon = True
         t.start()
@@ -35,7 +35,17 @@ if __name__ == "__main__":
     baseUrl = settings.getValue('URL')
     temPath = settings.getValue('outputPath')
     queuePath = settings.getValue('outputPath') + '/todolist.txt'
+    maxThread = int(settings.getValue('ThreadingMaxNum'))
+    isClear = int(settings.getValue('isClear'))
+    sleepTime = int(settings.getValue('SleepTime'))
+    if isClear == 1:
+        try:
+            rmtree(temPath)
+        except:
+            print('Not find temporary folder')
+        else:
+            print('Temporary folder removed! (Can\'t continue after break, change at setting.txt)')
+
     spider = Spider(baseUrl,temPath,job)
-    create_workers()
-    #    crawl()
+    threadingCrawl(maxThread)
     updateTask(queuePath)

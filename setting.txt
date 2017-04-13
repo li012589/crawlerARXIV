@@ -1,5 +1,6 @@
 // The URL to crawl
-URL = 'https://arxiv.org'
+//URL = 'https://arxiv.org'
+URL = 'http://jandan.net/ooxx'
 // keyword for result to included, empty for include all
 keyword = ''
 // Output path
@@ -8,3 +9,9 @@ outputPath = './OUTPUT'
 resultPath = './OUTPUT/result.md'
 // Download pdf or not?
 isdownload = 0
+// Max number of threadings
+ThreadingMaxNum = 1
+// Sleep time between every crawl
+SleepTime = 100
+// If clear Tem folder before crawling
+isClear = 1
