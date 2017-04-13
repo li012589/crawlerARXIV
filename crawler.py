@@ -17,17 +17,6 @@ def work():
         spider.crawl(threading.current_thread().name, url)
         queue.task_done()
 
-def create_jobs():
-    for link in fo.file2list('./OUTPUT/todolist.txt'):
-        queue.put(link)
-    queue.join()
-    crawl()
-def crawl():
-    queued_links = fo.file2list('./OUTPUT/todolist.txt')
-    if len(queued_links) > 0:
-        print(str(len(queued_links)) + ' links in the queue')
-        create_jobs()
-
 def updateTask(pathtoFile):
     while True:
         tasks = fo.file2list(pathtoFile)
