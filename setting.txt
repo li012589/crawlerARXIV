@@ -13,5 +13,7 @@ isdownload = 0
 ThreadingMaxNum = 1
 // Sleep time between every crawl
 SleepTime = 0.01
+// If the url match what, then pass the page, in python reg expression
+WhatToPass = '(#comment)'
 // If clear Tem folder before crawling
 isClear = 1

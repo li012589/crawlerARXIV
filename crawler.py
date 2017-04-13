@@ -40,6 +40,7 @@ if __name__ == "__main__":
     maxThread = int(settings.getValue('ThreadingMaxNum'))
     isClear = int(settings.getValue('isClear'))
     sleepTime = float(settings.getValue('SleepTime'))
+    passFeature = settings.getValue('WhatToPass')
     if isClear == 1:
         try:
             rmtree(temPath)
@@ -48,6 +49,6 @@ if __name__ == "__main__":
         else:
             print('Temporary folder removed! (Can\'t continue after break, change at setting.txt)')
 
-    spider = Spider(baseUrl,temPath,job)
+    spider = Spider(baseUrl,temPath,passFeature,job)
     threadingCrawl(maxThread,sleepTime)
     updateTask(queuePath)
