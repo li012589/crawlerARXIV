@@ -1,6 +1,6 @@
 // The URL to crawl
 //URL = 'https://arxiv.org'
-URL = 'http://jandan.net/ooxx'
+URL = 'http://jandan.net/pic'
 // keyword for result to included, empty for include all
 keyword = ''
 // Output path
@@ -18,6 +18,6 @@ SleepTime = 0.01
 // If the url match what, then pass the page, in python reg expression
 WhatToPass = '(#comment)'
 // Maxium pages
-maxPage = 1
+maxPage = 10
 // If clear Tem folder before crawling
 isClear = 1

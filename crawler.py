@@ -50,6 +50,12 @@ if __name__ == "__main__":
             print('Not find temporary folder')
         else:
             print('Temporary folder removed! (Can\'t continue after break, change at setting.txt)')
+        try:
+            rmtree(outputPath)
+        except:
+            print('Not find output folder')
+        else:
+            print('Ouput folder removed!')
 
     job = Job(outputPath)
     spider = Spider(baseUrl,temPath,passFeature,job.do)
