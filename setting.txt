@@ -14,7 +14,7 @@ isdownload = 0
 // Max number of threadings
 ThreadingMaxNum = 1
 // Sleep time between every crawl
-SleepTime = 0.01
+SleepTime = 0.5
 // If the url match what, then pass the page, in python reg expression
 WhatToPass = '(#comment)'
 // Maxium pages
